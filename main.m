@@ -6,6 +6,7 @@ Ndiseases = 3;
 N=Nfindings+Ndiseases;
 findings = Ndiseases+1:N;
 diseases = 1:Ndiseases;
+hepatitis_data = load_hepatitis_data()
 
 %generationg graph structure
 G = zeros(Ndiseases, Nfindings);
@@ -28,7 +29,7 @@ inhibit(not(G)) = 1;
 % first half of findings are +ve, second half -ve
 % The very first and last findings are hidden
 pos = 1:floor(Nfindings/2);
-neg = (pos(end)+1):(Nfindings q);
+neg = (pos(end)+1):(Nfindings);
 
 % Make the bnet in the straightforward way
 tabular_leaves = 1;
