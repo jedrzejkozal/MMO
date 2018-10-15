@@ -191,7 +191,30 @@ Korzystając z zależności logicznej:
 
 Aplikując poważyszy wzór dla sieci Bayesa można określić, że jeśli w domenowej dystrybucji P zmienne nie są niezależne to również nie powinny być niezależne w grafie (nie są d-separowane). W \cite{PhD} przedstawiono dokładny algorytm określania topologii sieci.
 
+\subsubsection{Węzły Noisy OR}
+
+\subsubsection{Sieci QMR}
+
 \section{Wykonane eksperymenty}
+
+\subsection{Analiza danych wejściowych}
+
+Zbiór zawiera 120 próbek. Dane są zbalansowane - dla obu zmiennych decyzyjnych występuje po odpowiednio 61 i 59 oraz 70 i 50 próbek należących do obu klas (zdrowy, chory). Wyklucza to konieczność stosowania oversamplingu lub undersamplingu. Poniżej omówiono sposób reprezentacji danych w przyjętym modelu.
+
+\subsubsection{Dychotomizacja}
+Dla każdej próbki wektor cech zawiera jedną cechę, która nie jest binarna. Istnieje wiele metod dyskretyzacji danych. Wiele z nich opiera się na wykorzystaniu średniej, wariancji i kwartyli zmiennych losowych. W przypadku projektu, przyjęto odmienne podejście. Korzystając z powszechnej wiedzy odnośnie występowania stanu podgorączkowego od 37.1 $^{\circ}$C zdychotomizowano temperaturę do stanów normalna i podwyższona. To rozwiązanie nie wymaga estymat obliczania momentów rozkładu, przez co jest bardziej odporne na zawartość zbioru uczącego. Po dychotomizacji każdy elemenet wektora w próbce ma wartość dyskretną, co znacząco ułatwia pracę z modelem.
+
+\subsubsection{Reprezentacja wartości logicznych}
+Przyjęto reprezentację wartości logicznych: 1 - false, 2 - true. Jest to wymaganie narzucone przez twórców toolboxa i prawdopodobnie jest związane z indeksowaniem maceirzy w matlabie od 1. 
+
+\subsection{Projekt eksperymentu}
+W nimniejszym rozdziale przedstawiono przyjęty sposob oceniania osiąganych wyników klasyfikatora
+
+\subsubsection{Podział zbioru uczącego}
+Cross validation. 20 i 100 próbek
+
+\subsubsection{Przyjęte kryterium oceny klasyfikatora}
+Definicja dokładności na podstawie tabeli błędu.
 
 \section{Uzyskane rezultaty}
 

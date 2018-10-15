@@ -1,12 +1,14 @@
 rand('state', 0);
 randn('state', 0);
-Nfindings = 5;
-Ndiseases = 3;
+Nfindings = 6;
+Ndiseases = 2;
 
 N=Nfindings+Ndiseases;
 findings = Ndiseases+1:N;
 diseases = 1:Ndiseases;
-hepatitis_data = load_hepatitis_data()
+
+
+data = load_data();
 
 %generationg graph structure
 G = zeros(Ndiseases, Nfindings);
@@ -19,9 +21,8 @@ for i=1:Nfindings
   G(rents,i)=1;
 end   
 
-prior = [0.2 0.5 0.3];
-%leak = 0.5*rand(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98     
-leak = 0.98 *ones(1,Nfindings);
+prior = [0.2 0.5];
+leak = 0.98 *ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
 inhibit = zeros(Ndiseases, Nfindings);
 
 inhibit(not(G)) = 1;
@@ -30,10 +31,10 @@ inhibit(not(G)) = 1;
 % The very first and last findings are hidden
 pos = 1:floor(Nfindings/2);
 neg = (pos(end)+1):(Nfindings);
+obs_nodes = myunion(pos, neg) + Ndiseases;
 
 % Make the bnet in the straightforward way
 tabular_leaves = 1;
-obs_nodes = myunion(pos, neg) + Ndiseases;
 bnet = mk_qmr_bnet(G, inhibit, leak, prior, tabular_leaves, obs_nodes);
 evidence = cell(1, N);
 evidence(findings(pos)) = num2cell(repmat(2, 1, length(pos)));
