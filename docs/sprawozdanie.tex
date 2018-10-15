@@ -24,7 +24,7 @@
 	\vspace{1cm}
 	{\scshape\Large Miekkie metody obliczeniowe\par}
 	\vspace{1.5cm}
-	{\huge\bfseries Zastosowanie Sieci Bayesa do czegośtam \par}
+	{\huge\bfseries Zastosowanie Sieci Bayesa do diagnozowania ostrych stanów zapalnych \par}
 	\vspace{2cm}
 	{\Large\itshape Filip Guzy\par}
 	{\Large\itshape Jędrzej Kozal\par}
@@ -46,19 +46,29 @@
 
 \section{Wstęp}
 
-Celem projektu jest zbadanie zastsowania Sieci Bayesa do automatycznego diagnozowania jakiejś choroby.
+Celem projektu jest zbadanie zastsowania Sieci Bayesa do automatycznego diagnozowania ostrych stanów zapalnych. 
 
+\subsection{Wymagania projektowe}
+W ramach projektu przewiduje się realizację:
+\begin{enumerate}
+	\item Analiza danych wejściowych
+	\item Przygotowanie danych wejściowych - dychotomizacja, dyskretyzacja
+	\item Podział danych wejściowych umożliwiający ocenę klasyfikatora
+	\item Wyznacznie parametrów analizowanego zbioru potrzebnych do skontruowania modelu (określenie prawdopodobieństw a priori i wspólnych rozkładów prawdopodobieństwa)
+	\item Przygotowanie modelu - Sieci Bayesa w konfiguracji QMR - i analiza wpływu topologii na uzyskane wyniki	
+\end{enumerate}
 
 \subsection{Wykorzystane narzędzia}
-Matlab.
+Do realizacji zadania wykorzystano środowisko Matlab, wraz z toolboxem BayesNet. Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{data set}.
 
 \section{Podstawy teoretyczne}
-
 W tej sekcji zostaną omówione teoretyczne aspekty problemu oraz przyjętych rozwiązań.
 
 \subsection{Omówienie zagadanienia}
 
 \subsubsection{Zbiór danych uczących}
+
+
 \subsubsection{Interpretacja danych}
 Pare słów o medycznym aspekcie i jakie dane analizujemy.
 
@@ -145,6 +155,12 @@ Aplikując poważyszy wzór dla sieci Bayesa można określić, że jeśli w dom
 
 \newpage
 \begin{thebibliography}{9}
+
+\bibitem{data set}
+J.Czerniak, H.Zarzycki, Application of rough sets in the presumptive diagnosis of urinary system diseases, 
+Artifical Inteligence and Security in Computing Systems, ACS'2002 9th International Conference Proceedings, 
+Kluwer Academic Publishers,2003, pp. 41-51 
+\\\texttt{https://archive.ics.uci.edu/ml/datasets/Acute+Inflammations}
 
 \bibitem{paper}
 Ben-Gal I., Bayesian Networks, in Ruggeri F., Faltin F. \& Kenett R.,
