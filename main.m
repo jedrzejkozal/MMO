@@ -18,7 +18,7 @@ G = ones(Ndiseases, Nfindings);
 
 prior = calc_prior(traning_data, Nfindings, Ndiseases);
 leak = 0.98 *ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
-inhibit = zeros(Ndiseases, Nfindings);
+inhibit = calc_inhibit(traning_data, Nfindings, Ndiseases);
 
 inhibit(not(G)) = 1;
 
