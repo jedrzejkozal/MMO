@@ -8,6 +8,8 @@
 \usepackage{caption}
 \usepackage{array}
 \usepackage{pbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
 
 \newcommand\tab[1][1cm]{\hspace*{#1}}
 
@@ -193,6 +195,49 @@ Aplikując poważyszy wzór dla sieci Bayesa można określić, że jeśli w dom
 
 \subsubsection{Węzły Noisy OR}
 
+Węzły Noisy OR w Sieciach Bayesa są probabilstycznym odpowiednikiem operacji logicznej OR. Dla węzła $E$ i jego przodków $C_1, C_2, ..., C_n$ definiuje się tablę prawdopodobieństw:
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,
+  font=\sffamily\Large\bfseries,minimum size=15mm}]
+
+  \node[main node] (Cone) {$C_1$};
+  \node[main node] (Ctwo) [below of=Cone] {$C_2$};
+  \node[main node] (Cn) [below of=Ctwo] {$C_n$};
+  \node[main node] (E) [right of=Ctwo] {$E$};
+
+  \path[every node/.style={font=\sffamily\small,
+  		fill=white,inner sep=1pt}]
+  	% Right-hand-side arrows rendered from top to bottom to
+  	% achieve proper rendering of labels over arrows.
+    (Cone) edge node[right=1mm] {$p_1$} (E)
+    (Ctwo) edge node[right=1mm] {$p_2$} (E)
+    (Cn) edge node[right=1mm]  {$p_n$} (E);
+\end{tikzpicture}
+\caption{Przykładowy schemat węzła noisy OR.}
+\end{figure}
+
+\begin{table}
+\caption{Tabela prawdopodobieństw dla węzła nosiy OR}
+\label{nosiy OR}
+\centering
+\begin{tabular}{|r|c|c|c|}
+  \hline 
+  A & B & P(C=F) & P(C=T)\\
+  \hline
+  F & F & $1$ & $0$\\
+  \hline
+  T & F & $p_A$ & $1-p_A$ \\
+  \hline
+  F & T & $p_B$ & $1-p_B$ \\
+  \hline
+  T & T & $p_A p_B$ & $1 - p_A p_B$ \\
+  \hline
+\end{tabular}
+\end{table} 
+
 \subsubsection{Sieci QMR}
 
 \section{Wykonane eksperymenty}
@@ -236,6 +281,12 @@ Encyclopedia of Statistics in Quality \& Reliability, Wiley \& Sons (2007).
 Learning Bayesian Network Model Structure from Data, Dimitris Margaritis
 May 2003, Carnegie Mellon University
 \\\texttt{https://www.cs.cmu.edu/~dmarg/Papers/PhD-Thesis-Margaritis.pdf}
+
+\bibitem{noisy OR}
+Probabilistic Asthma Case Finding: A Noisy OR Reformulation
+Vibha Anand, M.S., Stephen M. Downs, M.D., M.S.
+AMIA Annu Symp Proc. 2008
+\\\texttt{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2656011}
 
 \bibitem{Towards Data Sience}
 Introduction to Bayesian Networks, Towards Data Sience blog
