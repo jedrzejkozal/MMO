@@ -46,7 +46,7 @@
 
 \section{Wstęp}
 
-Celem projektu jest zbadanie skuczteczności Sieci Bayesa w automatycznej diagnozie ostrych stanów zapalnych. Określając zagadnienie diagnozowania jako problem klasyfikacji można zmierzyć dokładność uzyskanego modelu. W projekcie wykorzystano sieci QMR i zmierzono dokładność zgodnie z przyjętą metodyką.
+Celem projektu jest zbadanie skuteczności Sieci Bayesa w automatycznej diagnozie. Sieci Bayesa dobrze sprawują się dla zbilansowanych zbiorów zawierających zmienne dyskretne o znanych rozkładach, bądź zmienne dyskretne dla których możliwa jest estymacja parametryczna i nieparametryczna \cite{paper}. Zbiorem, który spełnia te wymagania jest Acute Inflammations Data Set dostępny w bazie UCI. Określając zagadnienie diagnozowania jako problem klasyfikacji można zmierzyć dokładność uzyskanego modelu. Osiągnięta dokładność dla sieci QMR została wyznaczona zgodnie z przyjętą metodyką.
 
 \subsection{Wymagania projektowe}
 W ramach projektu przewiduje się realizację poniższych podpunktów:
@@ -54,13 +54,13 @@ W ramach projektu przewiduje się realizację poniższych podpunktów:
 	\item Analiza danych wejściowych
 	\item Przygotowanie danych wejściowych - dychotomizacja, dyskretyzacja
 	\item Podział danych wejściowych umożliwiający ocenę klasyfikatora - projekt eksperymentu
-	\item Wyznacznie parametrów analizowanego zbioru potrzebnych do skontruowania modelu (określenie prawdopodobieństw a priori i wspólnych rozkładów prawdopodobieństwa)
-	\item Przygotowanie modelu - Sieci Bayesa w konfiguracji QMR - wyznazczenie topologii sieci
+	\item Wyznaczenie parametrów analizowanego zbioru potrzebnych do skonstruowania modelu (określenie prawdopodobieństw a priori i wspólnych rozkładów prawdopodobieństwa)
+	\item Przygotowanie modelu - Sieci Bayesa w konfiguracji QMR - wyznaczenie topologii sieci
 	\item Weryfikacja skuteczności modelu oraz analiza uzyskanych wyników
 	\item Weryfikacja odporności modelu na wektory z brakującymi danymi
 \end{enumerate}
 
-Zakłada się, że uzyskany klasyfikator nie będzie klasyfikatorem słabym (klasyfikatory słabe osiągają dokładność zbliżoną do losowego wyboru klasy). Ze względu na brak wiedzy eksperckiej w omawianej dziedzinie, parametry modelu będą określane na podstawie zbioru uczącego. W efekcie powodzenie projektu może być ściśle powiązane z jakością wykorzystanego zbioru danych. 
+Zakłada się, że uzyskany klasyfikator nie będzie klasyfikatorem słabym (klasyfikatory słabe osiągają dokładność zbliżoną do losowego wyboru klasy). Ze względu na brak wiedzy eksperckiej w omawianej dziedzinie, parametry modelu będą określane na podstawie zbioru uczącego. W efekcie powodzenie projektu będzie ściśle powiązane z jakością wykorzystanego zbioru danych. Innymi czynnikami, które mają wpływ na wynik eksperymentu są wiedza i umiejętności eksperymentatora.
 
 \subsection{Wykorzystane narzędzia}
 Do realizacji zadania wykorzystano środowisko Matlab, wraz z toolboxem BayesNet. Jest to darmowe narzędzie, dostępne do zanstalowania w środowisku Matlab. 

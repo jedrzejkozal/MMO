@@ -7,21 +7,16 @@ N=Nfindings+Ndiseases;
 findings = Ndiseases+1:N;
 diseases = 1:Ndiseases;
 
-
 data = load_data();
+Ntraning = 100;
+Nvalidation = length(data)-Ntraning;
+traning_data = data(1:Ntraning);
+validation_data = data(Ntraning+1:length(data));
 
 %generationg graph structure
-G = zeros(Ndiseases, Nfindings);
-for i=1:Nfindings
-  v= rand(1,Ndiseases);
-  rents = find(v<0.8);
-  if (length(rents)==0)
-    rents=ceil(rand(1)*Ndiseases);
-  end
-  G(rents,i)=1;
-end   
+G = ones(Ndiseases, Nfindings);
 
-prior = [0.2 0.5];
+prior = calc_prior(traning_data, Nfindings, Ndiseases);
 leak = 0.98 *ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
 inhibit = zeros(Ndiseases, Nfindings);
 
