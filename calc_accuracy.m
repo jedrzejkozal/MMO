@@ -1,4 +1,4 @@
-function [confusion_matrix1, confusion_matrix2, Acc1, Acc2] = calc_accuracy(validation_data, engine, diseases, Ndiseases, Nfindings)
+function [Acc1, Acc2] = calc_accuracy(validation_data, engine, diseases, Ndiseases, Nfindings)
 
 confusion_matrix1 = zeros(1,4); % TP FP FN TN
 confusion_matrix2 = zeros(1,4);
@@ -39,3 +39,5 @@ confusion_matrix2
 LR_plus2;
 LR_minus2;
 Acc2
+
+end
