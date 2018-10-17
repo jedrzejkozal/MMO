@@ -11,7 +11,7 @@ inhibit(not(G)) = 1;
 obs_nodes = 1:N;
 
 % Make the bnet in the straightforward way
-tabular_leaves = 1; %   = 0 means noisy-OR leaves
+tabular_leaves = 0; %   = 1 means multinomial leaves (ignores leak/inhibit params), = 0 means noisy-OR leaves
 bnet = mk_qmr_bnet(G, inhibit, leak, prior, tabular_leaves, obs_nodes);
 
 engine = jtree_inf_engine(bnet);

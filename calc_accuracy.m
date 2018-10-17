@@ -31,13 +31,13 @@ LR_minus2 = FNR2/TNR2;
 
 Acc2 = (confusion_matrix2(1) + confusion_matrix2(4))/(confusion_matrix2(1) + confusion_matrix2(2) + confusion_matrix2(3) + confusion_matrix2(4));
 
-confusion_matrix1
+confusion_matrix1;
 LR_plus1;
 LR_minus1;
-Acc1
-confusion_matrix2
+Acc1;
+confusion_matrix2;
 LR_plus2;
 LR_minus2;
-Acc2
+Acc2;
 
 end
