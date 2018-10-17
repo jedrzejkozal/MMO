@@ -254,7 +254,13 @@ W trakcie obliczania prawodpodobieństwa aposteriori zdarzenia z węzła potomne
 \end{aligned}
 \end{equation}
 
-Gdzie $P(A_i, B)$ jest wspólnym rozkładem prawdopodobieństwa zmarginalizowanym tak, żeby zawierał tylko zmienne $A_i$ i $B$.
+Gdzie $P(A_i, B)$ jest wspólnym rozkładem prawdopodobieństwa zmarginalizowanym tak, żeby zawierał tylko zmienne $A_i$ i $B$. Przez marginalizację unikamy wyznaczania całego wspólnego rozkładu prawdopodobieństwa. Jako estymator prawdopodobieństwa wykorzystano stosunek liczby próbek odwiadających konkretnej wartości zmiennej losowej $p_A$ do liczby wszystkich próbek $N$:
+
+\begin{equation}
+	P(A) = \frac{p_A}{N}
+\end{equation}
+
+Jest to estymator nieobciążony. Dla wybranego zbioru osiągnięte wartości można uznać za wiarygodne, ze względu na wystarczającą ilość próbek w analizowanym zbiorze.
 
 \subsubsection{Sieci QMR}
 
@@ -309,9 +315,9 @@ Definicja dokładności na podstawie tabeli pomyłek.
 \caption{Tabela pomyłek}
 \label{nosiy OR}
 \centering
-\begin{tabular}{|r|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
   \hline 
-  $A_1$ & Prawdziwa klasa P &Prawdziwa klasa N \\
+   & Prawdziwa klasa P & Prawdziwa klasa N \\
   \hline
   Przewidziana klasa & TP & FP \\
   \hline
