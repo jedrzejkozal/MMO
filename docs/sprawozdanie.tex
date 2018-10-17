@@ -246,9 +246,43 @@ Gdzie $p_A$ i $p_B$ są zdefiniowane jako prawdopodobieństwa hamowania dla węz
 \end{aligned}
 \end{equation}
 
-W trakcie obliczania prawodpodobieństwa aposteriori zdarzenia z węzła potomnego brane są pod uwagę tylko zdarzenia rodziców z wartością T. Prawdopodobieństwa mogą zostać wyestymowane na podstawie zbioru uczącego.
+W trakcie obliczania prawodpodobieństwa aposteriori zdarzenia z węzła potomnego brane są pod uwagę tylko zdarzenia rodziców z wartością T. Prawdopodobieństwa mogą zostać wyestymowane na podstawie zbioru uczącego. Na podstawie powyższego równania można zapisać:
+
+\begin{equation}
+\begin{aligned}
+	p_i = P(B|A_i) = \frac{P(A_i, B)}{P(A_i)}
+\end{aligned}
+\end{equation}
+
+Gdzie $P(A_i, B)$ jest wspólnym rozkładem prawdopodobieństwa zmarginalizowanym tak, żeby zawierał tylko zmienne $A_i$ i $B$.
 
 \subsubsection{Sieci QMR}
+
+Sieci QMR są konfiguracją sieci często wykorzystywaną do przeprowadzania diagnostyki. W pierwszym rzędzie sieci występują potencjalne powody pewnych obserwowanych wielkości. W drugim rzędzie występują obserwowane wielkości. Wszystkie obserwowane wielkości są połączone z powodami przez węzły nosiy OR. Uczenie sieci QMR jest bardzo uproszczone.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,fill=blue!20,draw,
+  font=\sffamily\Large\bfseries,minimum size=10mm}]
+
+  \node[main node] (Aone) {$A_1$};
+  \node[main node] (Bone) [below right of=Aone] {$B_1$};
+  \node[main node] (Atwo) [above right of=Bone] {$A_2$};
+  \node[main node] (Btwo) [below right of=Atwo] {$B_2$};
+  \node[main node] (Athree) [above right of=Btwo] {$A_3$};
+
+  \path[every node/.style={font=\sffamily\small,
+  		fill=white,inner sep=1pt}]
+    (Aone) edge node[right=1mm] {$$} (Bone)
+    (Aone) edge node[right=1mm] {$$} (Btwo)
+    (Atwo) edge node[right=1mm]  {$$} (Bone)
+    (Atwo) edge node[right=1mm]  {$$} (Btwo)
+    (Athree) edge node[right=1mm] {$$} (Bone)
+    (Athree) edge node[right=1mm] {$$} (Btwo);
+\end{tikzpicture}
+\caption{Przykładowa Sieć QMR.}
+\end{figure}
 
 \section{Wykonane eksperymenty}
 
@@ -269,7 +303,52 @@ W nimniejszym rozdziale przedstawiono przyjęty sposob oceniania osiąganych wyn
 Cross validation. 20 i 100 próbek
 
 \subsubsection{Przyjęte kryterium oceny klasyfikatora}
-Definicja dokładności na podstawie tabeli błędu.
+Definicja dokładności na podstawie tabeli pomyłek.
+
+\begin{table}
+\caption{Tabela pomyłek}
+\label{nosiy OR}
+\centering
+\begin{tabular}{|r|c|c|c|}
+  \hline 
+  $A_1$ & Prawdziwa klasa P &Prawdziwa klasa N \\
+  \hline
+  Przewidziana klasa & TP & FP \\
+  \hline
+  Przewidziana klasa & FN & TN \\
+  \hline
+\end{tabular}
+\end{table}
+
+W tabeli pomyłek (confusion matrix) przedstawione są ilości próbke zaklasyfikowanych do wybranej kategori przez model w zależności od rzeczywistej klasy próbki. Na podstawie tabeli pomyłek można zdeafiniować najprostszą normę jakości klasyfikatora - dokładność. Dokładność jest zdefiniowana jako ilość poprawnie sklasyfikowanych próbek do wszystkich próbek ze zbioru uczącego.
+
+\begin{equation}
+	ACC = \frac{TP+TN}{TP+FP+TN+FN}
+\end{equation}
+
+W medycynie częściej stosowanymi normami dla testów są wskaźniki wiarygodności (Likelihood ratios) definiowane jako:
+
+\begin{equation}
+\begin{aligned}
+	LR+ &= \frac{TPR}{FPR} = \frac{\frac{TP}{TP+FN}}{\frac{FP}{FP+TN}} \\ 
+	LR- &= \frac{FNR}{TNR} = \frac{\frac{FN}{TP+FN}}{\frac{TN}{FP+TN}}
+\end{aligned}
+\end{equation}
+
+$LR+$ opisuje stosunek częstości poprawnej klasyfikacji kalsy positive do częstości niepoprawnej klasyfikacji klasy negative. Im większa wartość $LR+$ tym większe prawdopodobieństwo występowania choroby.
+$LR-$ opisuje stosunek częstości niepoprawnej klasyfikacji klasy positive do częstości poprawnej klasyfikacji klasy negative. Im mniejsza wartość $LR-$ tym większa braku choroby.
+
+W projekcie przyjęto (...) jako normę do opisu jakości klasyfikatora.
+Dla dwóch chorób ze zbioru uczącego wartości normy są obliczane niezależnie.
+Dla zbioru uczącego i klasyfikatora losowego (przypisującego losową klasę nie zależnie od rzeczywistego stanu) wybrana norma przyjmuje wawrtości:
+
+\begin{equation}
+\begin{aligned}
+  |choroba_1| = ? \\
+  |choroba_2| = ?
+\end{aligned}
+\end{equation}
+
 
 \section{Uzyskane rezultaty}
 
