@@ -35,7 +35,7 @@ end
 
 Uacc1 = sum(result(:,1))/Ntrials
 Uacc2 = sum(result(:,2))/Ntrials
-ULRplus1 = sum(result(:,3))/Ntrials
-ULRminus1 = sum(result(:,4))/Ntrials
-ULRplus2 = sum(result(:,5))/Ntrials
-ULRminus2 = sum(result(:,6))/Ntrials
+ULRplus1 = sum(result(:,3))/Ntrials;
+ULRminus1 = sum(result(:,4))/Ntrials;
+ULRplus2 = sum(result(:,5))/Ntrials;
+ULRminus2 = sum(result(:,6))/Ntrials;

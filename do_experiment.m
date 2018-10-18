@@ -2,7 +2,7 @@ function result = do_experiment(traning_data, validation_data, N, Nfindings, Ndi
 
 %generate graph structure
 %G = ones(Ndiseases, Nfindings);
-G = [ 1 0 0 1 1 0; 0 1 1 0 0 0 ];
+G = [ 0 0 0 1 1 1; 1 1 1 1 1 1 ];
 
 prior = calc_prior(traning_data, Nfindings, Ndiseases);
 %leak = 0.98 *ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
