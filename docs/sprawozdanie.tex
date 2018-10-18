@@ -68,6 +68,7 @@ Zakłada się, że uzyskany klasyfikator nie będzie klasyfikatorem słabym (kla
 \subsection{Wykorzystane narzędzia}
 Do realizacji zadania wykorzystano środowisko Matlab, wraz z toolboxem BayesNet. Jest to darmowe narzędzie, dostępne do zanstalowania w środowisku Matlab. 
 
+\newpage
 \section{Podstawy teoretyczne}
 W tej sekcji zostaną omówione teoretyczne aspekty problemu oraz przyjętych rozwiązań.
 
@@ -290,6 +291,7 @@ Sieci QMR są konfiguracją sieci często wykorzystywaną do przeprowadzania dia
 \caption{Przykładowa Sieć QMR.}
 \end{figure}
 
+\newpage
 \section{Wykonane eksperymenty}
 
 \subsection{Analiza danych wejściowych}
@@ -306,18 +308,20 @@ Przyjęto reprezentację wartości logicznych: 1 - false, 2 - true. Jest to wyma
 W nimniejszym rozdziale przedstawiono przyjęty sposob oceniania osiąganych wyników klasyfikatora
 
 \subsubsection{Podział zbioru uczącego}
-Cross validation. 20 i 100 próbek
+
+W celu uniezależnienia wyników eksperymentu od doboru elementów zbioru testowego zastsowano exhaustive cross-validation. Wykorzystano metodę Leave-p-out cross-validation, bez uwzględnienia kolejności elementów zbioru uczącego. Zbiór danych został podzielony na 100 próbek treningowych oraz 20 próbek testowych. Eksperyment był powtarzany wielokrotnie dla różnych kombinacji elementów w zbiorze uczącym i testowym. Wyniki podane w późniejszej części są uśrednione dla wszystkich otrzymanych rezultatów.
+
+Przed podziałem zbioru danych następuje losowa zmiana kolejności elementów, aby uniknąć problemów związanych z brakiem elementów klasy w zbiorze uczącym. Tym samym reprodukowalność wyników jest zmniejszona, kosztem eliminacji problemów z nadreprezentacją jednej z klas.
 
 \subsubsection{Przyjęte kryterium oceny klasyfikatora}
-Definicja dokładności na podstawie tabeli pomyłek.
 
 \begin{table}
 \caption{Tabela pomyłek}
-\label{nosiy OR}
+\label{conf matrix}
 \centering
 \begin{tabular}{|c|c|c|c|}
   \hline 
-   & Prawdziwa klasa P & Prawdziwa klasa N \\
+   & Rzeczywista klasa P & Rzeczywista klasa N \\
   \hline
   Przewidziana klasa P & TP & FP \\
   \hline
@@ -326,10 +330,10 @@ Definicja dokładności na podstawie tabeli pomyłek.
 \end{tabular}
 \end{table}
 
-W tabeli pomyłek (confusion matrix) przedstawione są ilości próbke zaklasyfikowanych do wybranej kategori przez model w zależności od rzeczywistej klasy próbki. Na podstawie tabeli pomyłek można zdeafiniować najprostszą normę jakości klasyfikatora - dokładność. Dokładność jest zdefiniowana jako ilość poprawnie sklasyfikowanych próbek do wszystkich próbek ze zbioru uczącego.
+W tabeli pomyłek (confusion matrix - zob. tabela \ref{conf matrix}) przedstawione są ilości próbek zaklasyfikowanych do wybranej kategori przez model w zależności od rzeczywistej klasy próbki. Na podstawie tabeli pomyłek można zdeafiniować najprostszą normę jakości klasyfikatora - dokładność. Dokładność jest zdefiniowana jako ilość poprawnie sklasyfikowanych próbek do wszystkich próbek ze zbioru uczącego.
 
 \begin{equation}
-	ACC = \frac{TP+TN}{TP+FP+TN+FN}
+	Acc = \frac{TP+TN}{TP+FP+TN+FN}
 \end{equation}
 
 W medycynie częściej stosowanymi normami dla testów są wskaźniki wiarygodności (Likelihood ratios) definiowane jako:
@@ -342,21 +346,75 @@ W medycynie częściej stosowanymi normami dla testów są wskaźniki wiarygodno
 \end{equation}
 
 $LR+$ opisuje stosunek częstości poprawnej klasyfikacji kalsy positive do częstości niepoprawnej klasyfikacji klasy negative. Im większa wartość $LR+$ tym większe prawdopodobieństwo występowania choroby.
-$LR-$ opisuje stosunek częstości niepoprawnej klasyfikacji klasy positive do częstości poprawnej klasyfikacji klasy negative. Im mniejsza wartość $LR-$ tym większa braku choroby.
+$LR-$ opisuje stosunek częstości niepoprawnej klasyfikacji klasy positive do częstości poprawnej klasyfikacji klasy negative. Im mniejsza wartość $LR-$ tym większa szansa na brak choroby.
 
-W projekcie przyjęto (...) jako normę do opisu jakości klasyfikatora.
-Dla dwóch chorób ze zbioru uczącego wartości normy są obliczane niezależnie.
-Dla zbioru uczącego i klasyfikatora losowego (przypisującego losową klasę nie zależnie od rzeczywistego stanu) wybrana norma przyjmuje wawrtości:
+W projekcie przyjęto $Acc$, $LR+$ i $LR-$ jako normę do opisu jakości klasyfikatora. Dla dwóch chorób ze zbioru uczącego wartości normy są obliczane niezależnie. Na podstawie informacji o zbiorze uczącym można wyznaczyć tablicę błędów klasyfikatora losowego (przypisującego losową klasę nie zależnie od rzeczywistego stanu). Została ona przedstawiona w tabeli \ref{conf matrix on traning set}.
+
+\begin{table}
+\caption{Tabela pomyłek słabego klasyfikatora dla omawianego zbioru.}
+\label{conf matrix on traning set}
+\centering
+\begin{tabular}{|c|c|c|c|}
+  \hline
+   & \multicolumn{2}{c}{Ostre zapalenie pęcherza moczowego}  \\
+  \hline
+   & Rzeczywista klasa P & Rzeczywista klasa N \\
+  \hline
+  Przewidziana klasa P & 0.2458 & 0.2541 \\
+  \hline
+  Przewidziana klasa N & 0.2458 & 0.2541 \\
+  \hline
+  & \multicolumn{2}{c}{Odmiedniczkowe zapalenie nerek} \\
+  \hline
+  & Rzeczywista klasa P & Rzeczywista klasa N \\
+  \hline
+  Przewidziana klasa P & 0.2083 & 0.2917 \\
+  \hline
+  Przewidziana klasa N & 0.2083 & 0.2917 \\
+  \hline
+\end{tabular}
+\end{table}
+
+Należy zwrócić uwagę, że klasa Possitvie oznacza w tym wypadku występowanie choroby. Dla obliczonych wartości  z tablicy pomyłek wybrane normy przyjmuje wawrtości:
 
 \begin{equation}
 \begin{aligned}
-  |choroba_1| = ? \\
-  |choroba_2| = ?
+  Acc_1 = 0.5 \\
+  Acc_2 = 0.5 \\
+  LR+_1 = 1 \\
+  LR-_2 = 1
 \end{aligned}
 \end{equation}
 
+Z definicji powyższych parametrów wartość 1 oznacza, że wynik testu nie zmienia prawdopodobieństwa wystąpienia chrooby - test nie jest wiarygodny. Wartość 1 otrzymana dla losowego klasyfikatora jest oczekiwanym wynikiem.
 
+\newpage
 \section{Uzyskane rezultaty}
+
+\subsection{Dyskusja wyników}
+
+Zgodnie z metodyką opisaną w poprzednim rozdziale przeprowadzono eksperymenty. Wykonano 120 eksperymentów. Wyniki przedstawione w tabeli \ref{results} zostały uśrednione dla wszystkich przypadków testowych uzyskanych przez zastosowanie cross-validation.
+
+\begin{table}
+\caption{Uzyskane wyniki}
+\label{results}
+\centering
+\begin{tabular}{|c|c|c|c|}
+  \hline 
+   & Ostre zapalenie pęcherza moczowego & Odmiedniczkowe zapalenie nerek \\
+  \hline
+  Acc & 0.4417 & 0.6500 \\
+  \hline
+  LR+ & 0.8770 & 1.6986 \\
+  \hline
+  LR- & 1.8685 & 0 \\
+  \hline
+\end{tabular}
+\end{table}
+
+Ostre zapalenie pęcherza moczowego jest diagnozowane ze znacząco mniejszą skutecznością niż odmiedniczkowe zapalenie nerek. Dla pierwszej choroby osiągana dokładność jest niższa niż dokładność obliczona dla klasyfikatora losowego. Odmiedniczkowe zapalenie nerek jest diagnozowane nieznacznie lepiej przez stworzony model niż przez klasyfikator losowy. Warto również zwrócić uwagę, na fakty iż $LR-$ przy klasyfikacji drugiej choroby wyniosi 0. Jest to spowodowane zerowową wartością błędu FN (False Negative). W klasyfikacji chorób jest to bardzo porządana cecha. Oznacza to, że żadnej pacjent, który jest chory w rzeczywistoście nie zostanie zdiagnozowany jako zdrowy.
+
+Uzyskane wyniki nie różnią się znacząco od wyników przedstawionych w poprzednim rozdziale dla klasyfikatora losowego. Jest to zaskakujące odkrycie, które obala hipotezę postawioną we wstępie tej pracy. Powodów takich rezultatów może być kilka. Pierwszego z nich należy upatrywać się w samych danych. Bardzo istontnym założeniem czynionym przy modelowaniu z wykorzystaniem Sieci Bayesa, jest niezależność zmiennych losowych. W przypadku gdy to założenie nie jest spełnione, Sieci Bayesa nie uzyskują zadowalających rezultatów. Inne źródła mogą wynikać z błędów systematycznych popełnionych przy pracy, bądź z błędnej implementacji dostępnej w toolboxie.
 
 \newpage
 \begin{thebibliography}{9}
@@ -391,10 +449,17 @@ Introduction to Bayesian Networks, Towards Data Sience blog
 Baysian network software for Artificial Inteligence
 \\\texttt{https://www.bayesserver.com/docs/introduction/bayesian-networks}
 
+\bibitem{matlab toolbox}
+Dokumentacja Bayes Net Toolbox
+\\\texttt{http://bayesnet.github.io/bnt/docs/usage.html\#basics}
+
 \end{thebibliography}
 \newpage
 
 \listoffigures
+\newpage
+
+\listoftables
 \newpage
 
 \end{document}

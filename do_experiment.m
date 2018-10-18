@@ -1,4 +1,4 @@
-function [Acc1, Acc2] = do_experiment(traning_data, validation_data, N, Nfindings, Ndiseases, diseases)
+function result = do_experiment(traning_data, validation_data, N, Nfindings, Ndiseases, diseases)
 
 %generate graph structure
 G = ones(Ndiseases, Nfindings);
@@ -18,6 +18,6 @@ engine = jtree_inf_engine(bnet);
 
 Acc1 = 0;
 Acc2 = 0;
-[Acc1, Acc2] = calc_accuracy(validation_data, engine, diseases, Ndiseases, Nfindings);
+result = calc_accuracy(validation_data, engine, diseases, Ndiseases, Nfindings);
 
 end
