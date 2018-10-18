@@ -391,13 +391,15 @@ Z definicji powyższych parametrów wartość 1 oznacza, że wynik testu nie zmi
 \newpage
 \section{Uzyskane rezultaty}
 
-\subsection{Dyskusja wyników}
+Zgodnie z metodyką opisaną w poprzednim rozdziale przeprowadzono eksperymenty. W każdym przypadku wykonano 120 eksperymentów. Wyniki przedstawione zostały uśrednione dla wszystkich przypadków testowych uzyskanych przez zastosowanie cross-validation. 
 
-Zgodnie z metodyką opisaną w poprzednim rozdziale przeprowadzono eksperymenty. Wykonano 120 eksperymentów. Wyniki przedstawione w tabeli \ref{results} zostały uśrednione dla wszystkich przypadków testowych uzyskanych przez zastosowanie cross-validation.
+\subsection{Pełna struktura grafu}
 
-\begin{table}
-\caption{Uzyskane wyniki}
-\label{results}
+W tabeli \ref{results full} przedstawiono osiągnięte rezultaty dla sieci QMR ze wszystkimi połęczeniami między węzłami.
+
+\begin{table}[H]
+\caption{Wyniki uzyskane dla pełnej struktury grafu}
+\label{results full}
 \centering
 \begin{tabular}{|c|c|c|c|}
   \hline 
@@ -413,6 +415,31 @@ Zgodnie z metodyką opisaną w poprzednim rozdziale przeprowadzono eksperymenty.
 \end{table}
 
 Ostre zapalenie pęcherza moczowego jest diagnozowane ze znacząco mniejszą skutecznością niż odmiedniczkowe zapalenie nerek. Dla pierwszej choroby osiągana dokładność jest niższa niż dokładność obliczona dla klasyfikatora losowego. Odmiedniczkowe zapalenie nerek jest diagnozowane nieznacznie lepiej przez stworzony model niż przez klasyfikator losowy. Warto również zwrócić uwagę, na fakty iż $LR-$ przy klasyfikacji drugiej choroby wyniosi 0. Jest to spowodowane zerowową wartością błędu FN (False Negative). W klasyfikacji chorób jest to bardzo porządana cecha. Oznacza to, że żadnej pacjent, który jest chory w rzeczywistoście nie zostanie zdiagnozowany jako zdrowy.
+
+\subsection{Niepełna struktura grafu}
+
+Na podstawie informacji medycznych dołączonych do zbioru danych zmodyfikowano strukturę grafu. Połączenie między węzłami odpowiadały powiązaniom chorób z ich symptomami. Wyniki dla zmodyfikowanej sieci zostały przedstawione w tabeli \ref{results not full}.
+
+\begin{table}[H]
+\caption{Wyniki uzyskane dla niepełnej struktury grafu}
+\label{results not full}
+\centering
+\begin{tabular}{|c|c|c|c|}
+  \hline 
+   & Ostre zapalenie pęcherza moczowego & Odmiedniczkowe zapalenie nerek \\
+  \hline
+  Acc & 0.4417 & 0.5833 \\
+  \hline
+  LR+ & 0.8791 & - \\
+  \hline
+  LR- & 1.1428 & 1 \\
+  \hline
+\end{tabular}
+\end{table}
+
+Dla choroby pierwszej nie zauważono poprawy wyników. Dla choroby drugiej trafność diagnozy jedynie się pogorszyła. Oblicznie $LR+$ dla choroby drugiej nie było możliwe.
+
+\subsection{Dyskusja wyników}
 
 Uzyskane wyniki nie różnią się znacząco od wyników przedstawionych w poprzednim rozdziale dla klasyfikatora losowego. Jest to zaskakujące odkrycie, które obala hipotezę postawioną we wstępie tej pracy. Powodów takich rezultatów może być kilka. Pierwszego z nich należy upatrywać się w samych danych. Bardzo istontnym założeniem czynionym przy modelowaniu z wykorzystaniem Sieci Bayesa, jest niezależność zmiennych losowych. W przypadku gdy to założenie nie jest spełnione, Sieci Bayesa nie uzyskują zadowalających rezultatów. Inne źródła mogą wynikać z błędów systematycznych popełnionych przy pracy, bądź z błędnej implementacji dostępnej w toolboxie.
 
