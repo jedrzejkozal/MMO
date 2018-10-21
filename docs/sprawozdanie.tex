@@ -66,23 +66,23 @@ W ramach projektu przewiduje się realizację poniższych podpunktów:
 Zakłada się, że uzyskany klasyfikator nie będzie klasyfikatorem słabym (klasyfikatory słabe osiągają dokładność zbliżoną do losowego wyboru klasy). Ze względu na brak wiedzy eksperckiej w omawianej dziedzinie, parametry modelu będą określane na podstawie zbioru uczącego. W efekcie powodzenie projektu będzie ściśle powiązane z jakością wykorzystanego zbioru danych. Innymi czynnikami, które mają wpływ na wynik eksperymentu są wiedza i umiejętności eksperymentatora.
 
 \subsection{Wykorzystane narzędzia}
-Do realizacji zadania wykorzystano środowisko Matlab, wraz z toolboxem BayesNet. Jest to darmowe narzędzie, dostępne do zanstalowania w środowisku Matlab. 
+Do realizacji zadania wykorzystano środowisko Matlab, wraz z toolboxem BayesNet. Jest to darmowe narzędzie, dostępne do zainstalowania w środowisku Matlab. 
 
 \newpage
 \section{Podstawy teoretyczne}
 W tej sekcji zostaną omówione teoretyczne aspekty problemu oraz przyjętych rozwiązań.
 
-\subsection{Omówienie zagadanienia}
+\subsection{Omówienie zagadnienia}
 W poniżej sekcji przedstawiono medyczne aspekty omawianego problemu.
 
 \subsubsection{Zbiór uczący}
-Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{data set}. Zawiera 120 próbek w większości binarnych lub dyskrenych. Autorzy uworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
+Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{dataset}. Zawiera 120 próbek w większości binarnych lub dyskretnych. Autorzy utworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
 
 \paragraph{Ostre zapalenie pęcherza moczowego}
-"Jest charakteryzowane przez nagłe wystąpienie bólu w okolicach brzucha i oddawaniem moczu przez nieustająco parcie moczowe, bólem w trakcie oddawania moczu i czasmi brakiem zdolności utrzymania moczu. Temperatura ciała posnosi się, jednakże nie powyżej 38C. Wydzielany mocz jest mętny i czasami zawiera krew. Przy odpowiednim leczeniu, symptomy ustępują w przeciągu kilku dni. Jednakże, choroba ma skłonności do nawrotów. U osób z ostrym zapalniem pęcherza moczowego powinniśmy się spodziewać, że choroba będzie miała dłuższy przebieg."
+"Jest charakteryzowane przez nagłe wystąpienie bólu w okolicach brzucha i oddawaniem moczu przez nieustająco parcie moczowe, bólem w trakcie oddawania moczu i czasami brakiem zdolności utrzymania moczu. Temperatura ciała podnosi się, jednakże nie powyżej 38C. Wydzielany mocz jest mętny i czasami zawiera krew. Przy odpowiednim leczeniu, symptomy ustępują w przeciągu kilku dni. Jednakże, choroba ma skłonności do nawrotów. U osób z ostrym zapaleniem pęcherza moczowego powinniśmy się spodziewać, że choroba będzie miała dłuższy przebieg."
 
 \paragraph{Odmiedniczkowe zapalenie nerek}
-"Występuje znacząco częsciej u kobiet niż u mężczyzn. Zaczyna się nagłą gorączką, która dochodzi i czasami przekracza 40C. Gorączce towarzyszą dreszcze i jedno lub obustronne bóle lędźwiowe, które czasami są bardzo silne. Symptomy ostrego odmiedniczkowego zapalenia pęcherza moczowego występują bardzo często. Nie są niepowszechnie nudności, wymioty i bóle występujące w całym brzuchu."
+"Występuje znacząco częściej u kobiet niż u mężczyzn. Zaczyna się nagłą gorączką, która dochodzi i czasami przekracza 40C. Gorączce towarzyszą dreszcze i jedno lub obustronne bóle lędźwiowe, które czasami są bardzo silne. Symptomy ostrego odmiedniczkowego zapalenia pęcherza moczowego występują bardzo często. Nie są niepowszechnie nudności, wymioty i bóle występujące w całym brzuchu."
 
 \subsubsection{Lista cech dostępnych w zbiorze uczącym}
 
@@ -90,7 +90,7 @@ W omawianym zbiorze dla każdego pacjenta znajdują się następujące parametry
 
 \begin{enumerate}
 	\item Temperatura pacjenta 35C-42C
-	\item Występowanie of nudności tak, nie
+	\item Występowanie nudności tak, nie
 	\item Ból lędźwiowy tak, nie
 	\item Nieustająca potrzeba oddawania moczu tak, nie
 	\item Ból w trakcie oddawania moczu tak, nie
@@ -103,10 +103,10 @@ W omawianym zbiorze dla każdego pacjenta znajdują się następujące parametry
 \subsection{Sieci Bayesa}
 
 \subsubsection{Modelowanie probabilitystyczne}
-W przypadku modelowania zależności między zmiennymi losowymi stosuje się wspólny rozkład prawdopodobieństwa (joint probabilty distribution, jpd). Dla dyskretnych zmiennych losowych stanowi ono tabelę z wszystkimi możliwymi kombinacjami wartości zmiennych. Dla 4 binarnych zmiennych losowych $A, B, C, D$ istnieje $2^4-1 = 15$ elementów tabeli. W ogólności liczba prawdopodobieństw $n$ zmiennych losowych w tabeli wynosi: $2^n - 1$. Funkcje wykładnicze bardzo szybko osiągają duże wartości, przez co modelowanie dla dużego $n$, może stanowić wyzwanie przez dużą liczbę paramterów.
+W przypadku modelowania zależności między zmiennymi losowymi stosuje się wspólny rozkład prawdopodobieństwa (joint probability distribution, jpd). Dla dyskretnych zmiennych losowych stanowi ono tabelę z wszystkimi możliwymi kombinacjami wartości zmiennych. Dla 4 binarnych zmiennych losowych $A, B, C, D$ istnieje $2^4-1 = 15$ elementów tabeli. W ogólności liczba prawdopodobieństw $n$ zmiennych losowych w tabeli wynosi: $2^n - 1$. Funkcje wykładnicze bardzo szybko osiągają duże wartości, przez co modelowanie dla dużego $n$, może stanowić wyzwanie przez dużą liczbę parametrów.
 
 \subsubsection{Definicja sieci Bayesa}
-Sieć Bayesa to klasa modeli graficznych, w których do modelowania zależności między zmiennymi losowymi wykorzystuje się acykliczny graf skierowany. Wierzchołki grafu zawierają zmienne losowe, a krawędzie modelują zależności między zmiennymi losowymi. Wierzchołki połączone z wybranym wierzchołkiem przez krawedź wchodzącą nazywamy rodzicami (parent). Wierzchołki połączone przez krawędź wychodzącą nazywamy dziećmi (child). Wierzchołek nie posiadający rodziców nazywany jest korzeniem (root). Krawędzie grafu i jego struktura modelują zależności między zmiennymi losowymi, co pozwala na ogarniczenie ilości parametrów modelu.
+Sieć Bayesa to klasa modeli graficznych, w których do modelowania zależności między zmiennymi losowymi wykorzystuje się acykliczny graf skierowany. Wierzchołki grafu zawierają zmienne losowe, a krawędzie modelują zależności między zmiennymi losowymi. Wierzchołki połączone z wybranym wierzchołkiem przez krawędź wchodzącą nazywamy rodzicami (parent). Wierzchołki połączone przez krawędź wychodzącą nazywamy dziećmi (child). Wierzchołek nie posiadający rodziców nazywany jest korzeniem (root). Krawędzie grafu i jego struktura modelują zależności między zmiennymi losowymi, co pozwala na ograniczenie ilości parametrów modelu.
 
 \begin{figure}
 \centering
@@ -115,7 +115,7 @@ Sieć Bayesa to klasa modeli graficznych, w których do modelowania zależności
 	\label{fig:net}
 \end{figure}
 
-Sieć Bayesa wykorzystuje założenie o niezależności zmiennych losowych do obliczania prawdopodobieństwa zmiennych losowych w wezłach, korzystając z prawdopodobieństwa wystąpienia konretnych wartości rodziców. 
+Sieć Bayesa wykorzystuje założenie o niezależności zmiennych losowych do obliczania prawdopodobieństwa zmiennych losowych w wezłach, korzystając z prawdopodobieństwa wystąpienia konkretnych wartości rodziców. 
 
 Stosując regułę łańcucha dla prawdopodobieństwa, można zapisać wspólny rozkład prawdopodobieństwa jako:
 
@@ -137,7 +137,8 @@ W ogólności dla Sieci Bayesa można zapisać:
 
 Powoduje to znaczącą redukcję liczby parametrów modelu.
 
-Przykładowa sieć Bayesa wraz z lokalnymi rozkładami prawdopodobieństwa została przedstawiona na rys. \ref{fig:net}. Poprzez podział tabel ze wspólnym rozkładem prawdopodobieństwa na mniejsze ilość paramterów modelu uległa zmianie z 15 do 18. Przy rosnącej ilości parametrów sieci Bayesa mogą przyczynić się do znaczącej redukcji liczby parametrów.
+% mles: tu mi się nie zgadza jedna rzecz - jest napisane ze ta metoda powoduje zmniejszenie ilości parametrów, tymczasem u nas ona zwiększa tą ilość z 15 do 18?
+Przykładowa sieć Bayesa wraz z lokalnymi rozkładami prawdopodobieństwa została przedstawiona na rys. \ref{fig:net}. Poprzez podział tabel ze wspólnym rozkładem prawdopodobieństwa na mniejsze ilość parametrów modelu uległa zmianie z 15 do 18. Przy rosnącej ilości parametrów sieci Bayesa mogą przyczynić się do znaczącej redukcji liczby parametrów.
 
 \subsubsection{D-separacja}
 
@@ -183,7 +184,7 @@ Aplikując poważyszy wzór dla sieci Bayesa można określić, że jeśli w dom
 
 \subsubsection{Węzły Noisy OR}
 
-Węzły Noisy OR w Sieciach Bayesa są probabilstycznym odpowiednikiem operacji logicznej OR. Dla dyskretnych węzłów $A, B$ i $C$ (gdzie $A$ i $B$ są przodkami $C$) definiuje się tablę prawdopodobieństw:
+Węzły Noisy OR w Sieciach Bayesa są probabilistycznym odpowiednikiem operacji logicznej OR. Dla dyskretnych węzłów $A, B$ i $C$ (gdzie $A$ i $B$ są przodkami $C$) definiuje się tablę prawdopodobieństw:
 
 \begin{figure}[H]
 \centering
@@ -233,7 +234,7 @@ Gdzie $p_A$ i $p_B$ są zdefiniowane jako prawdopodobieństwa hamowania dla węz
 \end{aligned}
 \end{equation}
 
-W trakcie obliczania prawodpodobieństwa aposteriori zdarzenia z węzła potomnego brane są pod uwagę tylko zdarzenia rodziców z wartością T. Prawdopodobieństwa mogą zostać wyestymowane na podstawie zbioru uczącego. Na podstawie powyższego równania można zapisać:
+W trakcie obliczania prawdopodobieństwa aposteriori zdarzenia z węzła potomnego brane są pod uwagę tylko zdarzenia rodziców z wartością T. Prawdopodobieństwa mogą zostać wyestymowane na podstawie zbioru uczącego. Na podstawie powyższego równania można zapisać:
 
 \begin{equation}
 \begin{aligned}
@@ -241,7 +242,7 @@ W trakcie obliczania prawodpodobieństwa aposteriori zdarzenia z węzła potomne
 \end{aligned}
 \end{equation}
 
-Gdzie $P(A_i, B)$ jest wspólnym rozkładem prawdopodobieństwa zmarginalizowanym tak, żeby zawierał tylko zmienne $A_i$ i $B$. Przez marginalizację unikamy wyznaczania całego wspólnego rozkładu prawdopodobieństwa. Jako estymator prawdopodobieństwa wykorzystano stosunek liczby próbek odwiadających konkretnej wartości zmiennej losowej $p_A$ do liczby wszystkich próbek $N$:
+Gdzie $P(A_i, B)$ jest wspólnym rozkładem prawdopodobieństwa zmarginalizowanym tak, żeby zawierał tylko zmienne $A_i$ i $B$. Przez marginalizację unikamy wyznaczania całego wspólnego rozkładu prawdopodobieństwa. Jako estymator prawdopodobieństwa wykorzystano stosunek liczby próbek odpowiadających konkretnej wartości zmiennej losowej $p_A$ do liczby wszystkich próbek $N$:
 
 \begin{equation}
 	P(A) = \frac{p_A}{N}
@@ -285,17 +286,17 @@ Sieci QMR są konfiguracją sieci często wykorzystywaną do przeprowadzania dia
 Zbiór zawiera 120 próbek. Dane są zbalansowane - dla obu zmiennych decyzyjnych występuje po odpowiednio 61 i 59 oraz 70 i 50 próbek należących do obu klas (zdrowy, chory). Wyklucza to konieczność stosowania oversamplingu lub undersamplingu. Poniżej omówiono sposób reprezentacji danych w przyjętym modelu.
 
 \subsubsection{Dychotomizacja}
-Dla każdej próbki wektor cech zawiera jedną cechę, która nie jest binarna. Istnieje wiele metod dyskretyzacji danych. Wiele z nich opiera się na wykorzystaniu średniej, wariancji i kwartyli zmiennych losowych. W przypadku projektu, przyjęto odmienne podejście. Korzystając z powszechnej wiedzy odnośnie występowania stanu podgorączkowego od 37.1 $^{\circ}$C zdychotomizowano temperaturę do stanów normalna i podwyższona. To rozwiązanie nie wymaga estymat obliczania momentów rozkładu, przez co jest bardziej odporne na zawartość zbioru uczącego. Po dychotomizacji każdy elemenet wektora w próbce ma wartość dyskretną, co znacząco ułatwia pracę z modelem.
+Dla każdej próbki wektor cech zawiera jedną cechę, która nie jest binarna. Istnieje wiele metod dyskretyzacji danych. Wiele z nich opiera się na wykorzystaniu średniej, wariancji i kwartyli zmiennych losowych. W przypadku projektu, przyjęto odmienne podejście. Korzystając z powszechnej wiedzy odnośnie występowania stanu podgorączkowego od 37.1 $^{\circ}$C zdychotomizowano temperaturę do stanów normalna i podwyższona. To rozwiązanie nie wymaga estymat obliczania momentów rozkładu, przez co jest bardziej odporne na zawartość zbioru uczącego. Po dychotomizacji każdy element wektora w próbce ma wartość dyskretną, co znacząco ułatwia pracę z modelem.
 
 \subsubsection{Reprezentacja wartości logicznych}
-Przyjęto reprezentację wartości logicznych: 1 - false, 2 - true. Jest to wymaganie narzucone przez twórców toolboxa i prawdopodobnie jest związane z indeksowaniem maceirzy w matlabie od 1. 
+Przyjęto reprezentację wartości logicznych: 1 - false, 2 - true. Jest to wymaganie narzucone przez twórców toolboxa i prawdopodobnie jest związane z indeksowaniem macierzy w Matlabie od 1. 
 
 \subsection{Projekt eksperymentu}
-W nimniejszym rozdziale przedstawiono przyjęty sposob oceniania osiąganych wyników klasyfikatora
+W niniejszym rozdziale przedstawiono przyjęty sposób oceniania osiąganych wyników klasyfikatora
 
 \subsubsection{Podział zbioru uczącego}
 
-W celu uniezależnienia wyników eksperymentu od doboru elementów zbioru testowego zastsowano exhaustive cross-validation. Wykorzystano metodę Leave-p-out cross-validation, bez uwzględnienia kolejności elementów zbioru uczącego. Zbiór danych został podzielony na 100 próbek treningowych oraz 20 próbek testowych. Eksperyment był powtarzany wielokrotnie dla różnych kombinacji elementów w zbiorze uczącym i testowym. Wyniki podane w późniejszej części są uśrednione dla wszystkich otrzymanych rezultatów.
+W celu uniezależnienia wyników eksperymentu od doboru elementów zbioru testowego zastosowano exhaustive cross-validation. Wykorzystano metodę Leave-p-out cross-validation, bez uwzględnienia kolejności elementów zbioru uczącego. Zbiór danych został podzielony na 100 próbek treningowych oraz 20 próbek testowych. Eksperyment był powtarzany wielokrotnie dla różnych kombinacji elementów w zbiorze uczącym i testowym. Wyniki podane w późniejszej części są uśrednione dla wszystkich otrzymanych rezultatów.
 
 Przed podziałem zbioru danych następuje losowa zmiana kolejności elementów, aby uniknąć problemów związanych z brakiem elementów klasy w zbiorze uczącym. Tym samym reprodukowalność wyników jest zmniejszona, kosztem eliminacji problemów z nadreprezentacją jednej z klas.
 
@@ -316,7 +317,7 @@ Przed podziałem zbioru danych następuje losowa zmiana kolejności elementów, 
 \end{tabular}
 \end{table}
 
-W tabeli pomyłek (confusion matrix - zob. tabela \ref{conf matrix}) przedstawione są ilości próbek zaklasyfikowanych do wybranej kategori przez model w zależności od rzeczywistej klasy próbki. Na podstawie tabeli pomyłek można zdeafiniować najprostszą normę jakości klasyfikatora - dokładność. Dokładność jest zdefiniowana jako ilość poprawnie sklasyfikowanych próbek do wszystkich próbek ze zbioru uczącego.
+W tabeli pomyłek (confusion matrix - zob. tabela \ref{conf matrix}) przedstawione są ilości próbek zaklasyfikowanych do wybranej kategorii przez model w zależności od rzeczywistej klasy próbki. Na podstawie tabeli pomyłek można zdefiniować najprostszą normę jakości klasyfikatora - dokładność. Dokładność jest zdefiniowana jako ilość poprawnie sklasyfikowanych próbek do wszystkich próbek ze zbioru uczącego.
 
 \begin{equation}
 	Acc = \frac{TP+TN}{TP+FP+TN+FN}
@@ -381,7 +382,7 @@ Zgodnie z metodyką opisaną w poprzednim rozdziale przeprowadzono eksperymenty.
 
 \subsection{Pełna struktura grafu}
 
-W tabeli \ref{results full} przedstawiono osiągnięte rezultaty dla sieci QMR ze wszystkimi połęczeniami między węzłami.
+W tabeli \ref{results full} przedstawiono osiągnięte rezultaty dla sieci QMR ze wszystkimi połączeniami między węzłami.
 
 \begin{table}[H]
 \caption{Wyniki uzyskane dla pełnej struktury grafu}
@@ -400,7 +401,7 @@ W tabeli \ref{results full} przedstawiono osiągnięte rezultaty dla sieci QMR z
 \end{tabular}
 \end{table}
 
-Ostre zapalenie pęcherza moczowego jest diagnozowane ze znacząco mniejszą skutecznością niż odmiedniczkowe zapalenie nerek. Dla pierwszej choroby osiągana dokładność jest niższa niż dokładność obliczona dla klasyfikatora losowego. Odmiedniczkowe zapalenie nerek jest diagnozowane nieznacznie lepiej przez stworzony model niż przez klasyfikator losowy. Warto również zwrócić uwagę, na fakty iż $LR-$ przy klasyfikacji drugiej choroby wyniosi 0. Jest to spowodowane zerowową wartością błędu FN (False Negative). W klasyfikacji chorób jest to bardzo porządana cecha. Oznacza to, że żadnej pacjent, który jest chory w rzeczywistoście nie zostanie zdiagnozowany jako zdrowy.
+Ostre zapalenie pęcherza moczowego jest diagnozowane ze znacząco mniejszą skutecznością niż odmiedniczkowe zapalenie nerek. Dla pierwszej choroby osiągana dokładność jest niższa niż dokładność obliczona dla klasyfikatora losowego. Odmiedniczkowe zapalenie nerek jest diagnozowane nieznacznie lepiej przez stworzony model niż przez klasyfikator losowy. Warto również zwrócić uwagę, na fakty iż $LR-$ przy klasyfikacji drugiej choroby wynosi 0.Jest to spowodowane zerową wartością błędu FN (False Negative). W klasyfikacji chorób jest to bardzo pożądaną cecha. Oznacza to, że żaden pacjent, który jest chory w rzeczywistości nie zostanie zdiagnozowany jako zdrowy.
 
 \subsection{Niepełna struktura grafu}
 
@@ -429,14 +430,14 @@ Dla choroby pierwszej i drugiej nie zauważono znaczącej poprawy wyników.
 
 Uzyskane wyniki nie różnią się znacząco od wyników przedstawionych w poprzednim rozdziale dla klasyfikatora losowego. Jest to zaskakujące odkrycie, które obala hipotezę postawioną we wstępie tej pracy. 
 
-Powodów takich rezultatów może być kilka. Pierwszego z nich należy upatrywać się w samych danych. Bardzo istontnym założeniem czynionym przy modelowaniu z wykorzystaniem Sieci Bayesa, jest niezależność zmiennych losowych. W przypadku gdy to założenie nie jest spełnione, Sieci Bayesa nie uzyskują zadowalających rezultatów. Ponadto w opisie zbioru można znaleźć: "(dla odmiedniczkowego zapalenia nerek) Symptomy ostrego odmiedniczkowego zapalenia pęcherza moczowego występują bardzo często". Może to stanowić poważną trudność dla klasyfikatora opartego o reguły probablistyczne. 
+Powodów takich rezultatów może być kilka. Pierwszego z nich należy upatrywać się w samych danych. Bardzo istotnym założeniem czynionym przy modelowaniu z wykorzystaniem Sieci Bayesa, jest niezależność zmiennych losowych. W przypadku gdy to założenie nie jest spełnione, Sieci Bayesa nie uzyskują zadowalających rezultatów. Ponadto w opisie zbioru można znaleźć: "(dla odmiedniczkowego zapalenia nerek) Symptomy ostrego odmiedniczkowego zapalenia pęcherza moczowego występują bardzo często". Może to stanowić poważną trudność dla klasyfikatora opartego o reguły probabilistyczne. 
 
 Inne źródła mogą wynikać z błędów systematycznych popełnionych przy pracy, bądź z błędnej implementacji dostępnej w toolboxie, lecz trudno ocenić prawdopodobieństwo czy wystąpiły.
 
 \newpage
 \begin{thebibliography}{9}
 
-\bibitem{data set}
+\bibitem{dataset}
 J.Czerniak, H.Zarzycki, Application of rough sets in the presumptive diagnosis of urinary system diseases, 
 Artifical Inteligence and Security in Computing Systems, ACS'2002 9th International Conference Proceedings, 
 Kluwer Academic Publishers,2003, pp. 41-51 
