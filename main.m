@@ -10,7 +10,8 @@ N=Nfindings+Ndiseases;
 findings = 1:Nfindings;
 diseases = Nfindings+1:N;
 
-data = load_data();
+%data = load_data();
+data = generate_data();
 
 %shuffle data
 data = data(randperm(numel(data)));
@@ -28,7 +29,7 @@ result = zeros(Ntrials, 6);
 for i = 1:Ntrials
     result(i,:) = do_experiment(traning_data, validation_data, N, Nfindings, Ndiseases, diseases);
     
-    new_validation_data = [validation_data(2:Nvalidation) traning_data(1)]; %take onother validation set with 20 elements
+    new_validation_data = [validation_data(2:Nvalidation) traning_data(1)]; %take another validation set with 20 elements
     traning_data = [traning_data(2:Ntraning) validation_data(1) ];
     validation_data = new_validation_data;
 end
