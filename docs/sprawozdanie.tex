@@ -76,7 +76,7 @@ W tej sekcji zostaną omówione teoretyczne aspekty problemu oraz przyjętych ro
 W poniżej sekcji przedstawiono medyczne aspekty omawianego problemu.
 
 \subsubsection{Zbiór uczący}
-Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{dataset}. Zawiera 120 próbek w większości binarnych lub dyskretnych. Autorzy utworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
+Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{dataset}. Zawiera 120 próbek w większości dyskretnych, a w szczególności binarnych. Autorzy utworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
 
 \paragraph{Ostre zapalenie pęcherza moczowego}
 "Jest charakteryzowane przez nagłe wystąpienie bólu w okolicach brzucha i oddawaniem moczu przez nieustająco parcie moczowe, bólem w trakcie oddawania moczu i czasami brakiem zdolności utrzymania moczu. Temperatura ciała podnosi się, jednakże nie powyżej 38C. Wydzielany mocz jest mętny i czasami zawiera krew. Przy odpowiednim leczeniu, symptomy ustępują w przeciągu kilku dni. Jednakże, choroba ma skłonności do nawrotów. U osób z ostrym zapaleniem pęcherza moczowego powinniśmy się spodziewać, że choroba będzie miała dłuższy przebieg."
@@ -425,6 +425,10 @@ Na podstawie informacji medycznych dołączonych do zbioru danych zmodyfikowano 
 \end{table}
 
 Dla choroby pierwszej i drugiej nie zauważono znaczącej poprawy wyników.
+
+\subsection{Generowanie przykładowych danych uczących}
+
+W celu weryfikacji poprawności modelu wygenerowano przykładowe dane uczące. W trakcie przperowadzania eksperymentów napotkano na wiele problemów. Najpoważniejszym z nich jest ogarniczenie narzucane przez toolbox dla sieci QMR. Uczenie sieci jest możliwe tylko dla danych binarnych. Powoduje to duże ograniczenia w możliwości weryfikacji poprawności działania modelu. Przanalizowano możliwość weryfikacji proprawności dla danych generowanych z dwóch niezależnych rozkładów Gaussa o różnych parametrach. Binaryzacja danych wymusza konieczność kwantyzacji ciągłych wartości. Rozważano wykorzystanie momentów i kwartyli do przeprowadzenia binaryzacji. Zastosowanie tego podejścia nie pozwala na uniknięcie problemu niejednoznaczności danych wykorzystywanych do klasyfikacji. W przypadku zbioru uczącego z repozytorium UCI problemem było powiązanie między chorobami - grupa objawów mogła występować w przypadku obecności obu chorób. Poprzez zastosowanie binaryzacji informacji wygenerowanych na podstwie rozkładów Gaussa napotykamy podobny problem. Zagadnienie można uprościć przez zastosowanie dwóch niezależnych i rozłącznych rozkładów jednostajnych. Jednakże takie założenie wymagałoby określenia klasy danych przy binaryzacji. Przykładowo dla rozkładów $\mathcal{U}(0,1)$ i $\mathcal{U}(3,4)$ dla wartości progowej binaryzacji $2$ jednoznacznie określamy klasę (wszystkie wartości ponieżej $2$ należą do klasy pierwszej, wszystkie wartości powyżej $2$ należą do klasy drugiej). W tym przypadku struktura sieci byłaby trywialna, przez co analiza takiego przypadku jest pozbawiona sensu.
 
 \subsection{Dyskusja wyników}
 
