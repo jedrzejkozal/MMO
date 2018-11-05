@@ -10,8 +10,8 @@ N=Nfindings+Ndiseases;
 findings = 1:Nfindings;
 diseases = Nfindings+1:N;
 
-%data = load_data();
-data = generate_data();
+data = load_data();
+%data = generate_data();
 
 %shuffle data
 data = data(randperm(numel(data)));
