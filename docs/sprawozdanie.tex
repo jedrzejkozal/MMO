@@ -76,7 +76,7 @@ W tej sekcji zostaną omówione teoretyczne aspekty problemu oraz przyjętych ro
 W poniżej sekcji przedstawiono medyczne aspekty omawianego problemu.
 
 \subsubsection{Zbiór uczący}
-Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{dataset}. Zawiera 120 próbek w większości dyskretnych, a w szczególności binarnych. Autorzy utworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
+Jako zbiór danych uczących wykorzystano zbiór Acute Inflammations Data Set dostępny w bazie UCI \cite{dataset}. Zawiera 120 dyskretnych próbek, w szczególności binarnych. Autorzy utworzyli go z myślą o wspieraniu systemu ekspertowego, umożliwiającego diagnozę dwóch chorób układu moczowego - ostrego zapalenia pęcherza moczowego oraz odmiedniczkowego zapalenia nerek. Poniższe charakterystyki chorób zostały zaczerpnięte z opisu zbioru.
 
 \paragraph{Ostre zapalenie pęcherza moczowego}
 "Jest charakteryzowane przez nagłe wystąpienie bólu w okolicach brzucha i oddawaniem moczu przez nieustająco parcie moczowe, bólem w trakcie oddawania moczu i czasami brakiem zdolności utrzymania moczu. Temperatura ciała podnosi się, jednakże nie powyżej 38C. Wydzielany mocz jest mętny i czasami zawiera krew. Przy odpowiednim leczeniu, symptomy ustępują w przeciągu kilku dni. Jednakże, choroba ma skłonności do nawrotów. U osób z ostrym zapaleniem pęcherza moczowego powinniśmy się spodziewać, że choroba będzie miała dłuższy przebieg."
@@ -162,9 +162,9 @@ $X$ jest niezależne od $Y$, jeżeli wszystkie możliwe ścieżki między $X$ a 
 
 $Z$ d-separuje $X$ od $Y$ (zapisywane: $X \perp_G Y|Z$), jeżeli wszystkie ścieżki między $X$ a $Y$ są zablokowane przez $Z$.
 
-\subsubsection{Detekcja topologi sieci na podstawie danych uczących}
+\subsubsection{Detekcja topologii sieci na podstawie danych uczących}
 
-Ze względu na brak wiedzy dziedzinowej z zakresu medycyny, oraz braku możliwości konsultacji z ekspertem postanowiono wykorzystać metody pozwalające na nauczenie struktury sieci na podstawie zbioru uczącego.
+Ze względu na brak wiedzy dziedzinowej z zakresu medycyny oraz braku możliwości konsultacji z ekspertem postanowiono wykorzystać metody pozwalające na nauczenie struktury sieci na podstawie zbioru uczącego.
 
 W \cite{PhD} podano metody uczenia struktury sieci Bayesa. Wyróżna się dwie główne metody. Pierwsza z nich opiera się na maksymalizacji funkcji celu z wykorzystaniem maximum likelihood. Zaproponowano podejście w którym topologia sieci jest modyfikowana zgodnie z kierunkiem wzrostu maximum likelihood (hill climbing).
 
@@ -286,7 +286,7 @@ Sieci QMR są konfiguracją sieci często wykorzystywaną do przeprowadzania dia
 Zbiór zawiera 120 próbek. Dane są zbalansowane - dla obu zmiennych decyzyjnych występuje po odpowiednio 61 i 59 oraz 70 i 50 próbek należących do obu klas (zdrowy, chory). Wyklucza to konieczność stosowania oversamplingu lub undersamplingu. Poniżej omówiono sposób reprezentacji danych w przyjętym modelu.
 
 \subsubsection{Dychotomizacja}
-Dla każdej próbki wektor cech zawiera jedną cechę, która nie jest binarna. Istnieje wiele metod dyskretyzacji danych. Wiele z nich opiera się na wykorzystaniu średniej, wariancji i kwartyli zmiennych losowych. W przypadku projektu, przyjęto odmienne podejście. Korzystając z powszechnej wiedzy odnośnie występowania stanu podgorączkowego od 37.1 $^{\circ}$C zdychotomizowano temperaturę do stanów normalna i podwyższona. To rozwiązanie nie wymaga estymat obliczania momentów rozkładu, przez co jest bardziej odporne na zawartość zbioru uczącego. Po dychotomizacji każdy element wektora w próbce ma wartość dyskretną, co znacząco ułatwia pracę z modelem.
+Dla każdej próbki wektor cech zawiera jedną cechę, która nie jest binarna. Istnieje wiele metod dyskretyzacji danych. Wiele z nich opiera się na wykorzystaniu średniej, wariancji i kwartyli zmiennych losowych. W kontekście projektu przyjęto odmienne podejście. Korzystając z powszechnej wiedzy odnośnie występowania stanu podgorączkowego od 37.1 $^{\circ}$C zdychotomizowano temperaturę do stanów normalna i podwyższona. To rozwiązanie nie wymaga estymat obliczania momentów rozkładu, przez co jest bardziej odporne na zawartość zbioru uczącego. Po dychotomizacji każdy element wektora w próbce ma wartość dyskretną, co znacząco ułatwia pracę z modelem.
 
 \subsubsection{Reprezentacja wartości logicznych}
 Przyjęto reprezentację wartości logicznych: 1 - false, 2 - true. Jest to wymaganie narzucone przez twórców toolboxa i prawdopodobnie jest związane z indeksowaniem macierzy w Matlabie od 1. 
