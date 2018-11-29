@@ -4,9 +4,8 @@ function result = do_experiment(traning_data, validation_data, N, Nfindings, Ndi
 G = ones(Ndiseases, Nfindings);
 %G = [ 1 1 1 0 0 0; 0 0 0 1 1 1 ];
 
-prior = calc_prior(traning_data, Nfindings, Ndiseases);
-%leak = 0.98 *ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
-leak = 0.98*ones(1,Nfindings);
+prior = calc_prior(traning_data, Nfindings, Ndiseases); 
+leak = 0.98*ones(1,Nfindings); % in real QMR, leak approx exp(-0.02) = 0.98 
 inhibit = calc_inhibit(traning_data, Nfindings, Ndiseases, prior);
 inhibit(not(G)) = 1;
 
