@@ -16,6 +16,6 @@ function inhibit = calc_inhibit(traning_data, Nfindings, Ndiseases, prior)
     inhibit = inhibit ./ sum_all; %joint probabilty distribution, marginalised to two variables - P(B_1=T, A_1=T)  *ones(size(inhibit))
     
     for l=1:Ndiseases
-        inhibit(l,:) = inhibit(l,:) ./ prior(l); % p_i = P(B_1=T|A_1=T)
+        inhibit(l,:) = 1 - inhibit(l,:) ./ prior(l); % p_i = P(B_1=T|A_1=T)
     end
 end
