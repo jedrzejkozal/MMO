@@ -25,34 +25,24 @@ class BayesianNetwork:
         self.num_observables = x_train.shape[1]
         self.num_unknowns = y_train.shape[1]
 
-        self._compute_conditionals(dataset)
         self._compute_apriori(dataset)
+        self._compute_conditionals(dataset)
 
     def _compute_conditionals(self, dataset):
         self.conditionals = np.zeros(
-            (2**self.num_unknowns, self.num_observables))
-        normalization_vector = np.zeros((2**self.num_unknowns, 1))
+            (2*self.num_unknowns, self.num_observables))
 
         for sample in dataset:
-            index = self._vector_to_int(sample[:self.num_unknowns])
-            self.conditionals[index] += sample[self.num_unknowns:]
-            normalization_vector[index] += 1
+            for d_index, d_value in enumerate(sample[self.num_unknowns:]):
+                if d_value == 1:
+                    for g_index, g_value in enumerate(sample[:self.num_unknowns]):
+                        self.conditionals[2*g_index + g_value, d_index] += 1
 
-        self.conditionals = self.conditionals / normalization_vector
-        self.conditionals = self.conditionals.T
-        print(self.conditionals)
-
-        new_shape = tuple(2 for _ in range(self.num_unknowns))
-        new_shape = (self.num_observables,) + new_shape
-        reshaped = self.conditionals.reshape(new_shape)
-        reshaped = np.moveaxis(reshaped, 0, -1)
-        print(reshaped.shape)
-        self.conditionals = reshaped
-
-    def _vector_to_int(self, vector):
-        vector_str = [str(elem) for elem in vector]
-        string = ''.join(vector_str)
-        return int(string, 2)
+        for i in range(self.num_unknowns):
+            self.conditionals[2*i] = self.conditionals[2*i] / \
+                ((1-self.apriori[i]) * self.num_samples)
+            self.conditionals[2*i+1] = self.conditionals[2 *
+                                                         i+1] / (self.apriori[i] * self.num_samples)
 
     def _compute_apriori(self, dataset):
         self.apriori = np.zeros((self.num_variables,))
@@ -83,17 +73,12 @@ class BayesianNetwork:
 
         likelihood = 1.0
         for event_index, event_value in enumerate(x):
-            indexes = [slice(None) for _ in range(self.num_unknowns+1)]
-            indexes[g_index] = 1
-            indexes[-1] = int(event_index)
-            indexes = tuple(indexes)
-            print('indexes = ', indexes)
-            prob = np.sum(self.conditionals[indexes], axis=None)
-            # print('self.conditionals[indexes] = ',
-            #       self.conditionals[indexes].size)
-            if event_value == 0:
-                prob = 2**(self.num_unknowns-1) - prob
-            print('prob = ', prob)
+            if event_index == 1:
+                prob = self.conditionals[g_index+1, event_index]
+            else:
+                prob = (1 - self.conditionals[g_index+1, event_index])
+            if prob == 0.0:
+                prob = 0.00001
             likelihood *= prob
         print('likelihood = ,', likelihood)
 
